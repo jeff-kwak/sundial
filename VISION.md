@@ -247,7 +247,7 @@ never a blank, a dash, or a plausible-looking wrong number:
 | Dates | plain `Date` + ~30 lines of local-date helpers |
 | Persistence | `localStorage` |
 | Tests | Vitest + committed USNO fixtures |
-| Host | GitHub Pages via Actions (HTTPS is mandatory for geolocation and service workers) |
+| Host | GitHub Pages via Actions, at `https://jeffkwak.com/sundial/` (HTTPS mandatory — see below) |
 
 ### Explicit non-dependencies
 
@@ -267,10 +267,17 @@ of them.
 
 Constraints that follow, in order of how much they matter:
 
-- **Served as a project site: `https://jeff-kwak.github.io/sundial/`.** The account's user site
-  (`jeff-kwak.github.io`) is already the owner's bio and there is only one per account, so root
-  is unavailable. Project sites are unlimited and independent, so this coexists with the bio
-  without interaction.
+- **Live at `https://jeffkwak.com/sundial/`.** Served as a Pages *project site*: the account's
+  user site is already the owner's bio and there is only one per account, so root is unavailable.
+  Project sites are unlimited and independent, so this coexists with the bio without interaction.
+  The user site carries the custom domain `jeffkwak.com`, and project sites inherit it, so
+  `jeff-kwak.github.io/sundial/` is only a redirect — not the canonical address.
+- **HTTPS is a correctness requirement, not a preference.** Geolocation and service workers both
+  demand a secure context, so over plain `http` the GPS is refused and the worker never
+  registers — the app loses both its location input and its entire offline capability, silently
+  and with no error the user would see. **Pages → Enforce HTTPS must stay on**; with it off,
+  GitHub's redirect from the `github.io` host lands on `http://` and serves a quietly crippled
+  app to anyone who follows that link.
 - **The non-root base path is a code concern, not a config detail.** `base: '/sundial/'` in
   Vite, manifest `start_url` and `scope` both `/sundial/`, and the service worker emitted to
   `/sundial/sw.js` so that its scope is legal — a service worker's scope cannot exceed its own
@@ -278,10 +285,13 @@ Constraints that follow, in order of how much they matter:
   silently failing the app's central promise. No absolute asset paths may be hardcoded
   anywhere — every URL goes through Vite so `base` rewriting applies.
 - **`localStorage` is keyed by origin, and path is not part of origin.** Sundial shares
-  `jeff-kwak.github.io` with the bio site and any future project site. All keys are therefore
+  `jeffkwak.com` with the bio site and any future project site. All keys are therefore
   namespaced `sundial:` — without that they will eventually collide.
-- A custom domain (`sundial.<owned-domain>`) would return the app to root and remove the base
-  path wiring entirely. Worth taking if a domain is ever available; not a blocker.
+- **A custom domain does not remove the base path** — an earlier draft of this document claimed it
+  would, and that was wrong. Because the domain is attached to the *user site*, project sites
+  still serve from `/<repo>/`, so `base: '/sundial/'` remains correct under `jeffkwak.com`. Only a
+  dedicated subdomain pointed at this repo (`sundial.jeffkwak.com`) would move it to root, and
+  that would then require changing `BASE` in `vite.config.ts` to `'/'`.
 - **No custom response headers.** No `Cache-Control` control; CSP only via `<meta>`. Harmless
   here: Vite content-hashes assets and Workbox owns the cache, so the default short max-age on
   the shell is exactly what's wanted.

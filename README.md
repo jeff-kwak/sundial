@@ -44,20 +44,31 @@ never `NaN`, so no code path can print a time that isn't real.
 
 ## Deploying
 
+Live at **https://jeffkwak.com/sundial/**
+
 Pushes to `main` build and publish to GitHub Pages via `.github/workflows/deploy.yml`.
 
-Two one-time setup steps on the repo:
+Three one-time settings on the repo:
 
 1. The repo must be named **`sundial`** under the `jeff-kwak` account, so it serves at
-   `https://jeff-kwak.github.io/sundial/`. The account's user site is already the owner's bio,
-   so root is not available. A different repo name means changing `BASE` in `vite.config.ts` —
-   and the manifest `scope`/`start_url` follow it automatically from there.
+   `/sundial/`. The account's user site is already the owner's bio, so root is not available. A
+   different repo name means changing `BASE` in `vite.config.ts` — the manifest `scope` and
+   `start_url` follow from there automatically.
 2. Settings → Pages → **Source: GitHub Actions**. Free Pages requires a public repo.
+3. Settings → Pages → **Enforce HTTPS**. Not optional: see below.
 
-## The two things most likely to break
+The user site carries the custom domain `jeffkwak.com` and project sites inherit it, so
+`jeff-kwak.github.io/sundial/` is a redirect, not the canonical URL. The domain does *not* move
+the app to root — project sites still serve from `/<repo>/` — so `base: '/sundial/'` stays
+correct.
 
-- **`BASE` disagreeing with the service-worker scope.** It fails silently: the PWA installs and
-  simply never works offline. A worker's scope cannot exceed its own directory.
+## The three things most likely to break
+
+- **Serving over plain `http`.** Geolocation and service workers require a secure context, so on
+  `http` the GPS is refused and the worker never registers: no location, no offline, no error the
+  user can see. With Enforce HTTPS off, GitHub's redirect from the `github.io` host lands on
+  `http://` and hands out exactly that crippled app.
+- **`BASE` disagreeing with the service-worker scope.** Also silent: the PWA installs and simply
+  never works offline. A worker's scope cannot exceed its own directory.
 - **`localStorage` keys losing the `sundial:` prefix.** Storage is keyed by origin, and path is
-  not part of origin, so this app shares storage with everything else on
-  `jeff-kwak.github.io`.
+  not part of origin, so this app shares storage with everything else on `jeffkwak.com`.
