@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { bandsOf, gradientStops, resolveLabels } from '../src/layout'
+import { bandsOf, gradientStops, hourMarks, layoutDay, levelAt, levelOver, resolveLabels } from '../src/layout'
 import { solarDay, solarWindow, type SolarDay } from '../src/solar'
 
 const MINNEAPOLIS = { lat: 44.98, lon: -93.27 }
@@ -164,5 +164,122 @@ describe('label collision', () => {
     const items = [{ truePx: 500 }, { truePx: 100 }, { truePx: 300 }]
     const boxes = resolveLabels(items, HEIGHT, SLOT)
     expect(boxes.map((b) => b.truePx)).toEqual([100, 300, 500])
+  })
+})
+
+describe('level lookup', () => {
+  const bands = [
+    { from: 0, to: 0.25, level: 'night' as const },
+    { from: 0.25, to: 0.3, level: 'nautical' as const },
+    { from: 0.3, to: 0.9, level: 'day' as const },
+    { from: 0.9, to: 1, level: 'night' as const },
+  ]
+
+  it('finds the band containing a point', () => {
+    expect(levelAt(bands, 0)).toBe('night')
+    expect(levelAt(bands, 0.26)).toBe('nautical')
+    expect(levelAt(bands, 0.5)).toBe('day')
+    expect(levelAt(bands, 0.95)).toBe('night')
+  })
+
+  it('treats a boundary as belonging to the band it opens', () => {
+    expect(levelAt(bands, 0.25)).toBe('nautical')
+    expect(levelAt(bands, 0.3)).toBe('day')
+  })
+
+  it('resolves the very end of the column rather than falling through', () => {
+    expect(levelAt(bands, 1)).toBe('night')
+  })
+})
+
+describe('hour marks', () => {
+  const MINNEAPOLIS = { lat: 44.98, lon: -93.27 }
+
+  it('marks every sixth local hour', () => {
+    const marks = hourMarks(solarDay({ y: 2026, m: 8, d: 17 }, MINNEAPOLIS))
+    expect(marks.map((m) => m.hour)).toEqual([0, 6, 12, 18])
+    expect(marks.map((m) => Number(m.at.toFixed(4)))).toEqual([0, 0.25, 0.5, 0.75])
+  })
+
+  it('stays honest on a 23 hour day', () => {
+    // Spring forward: 02:00 never happens, the column is 23h, and the marks are
+    // no longer evenly spaced. Naive hour*1/24 arithmetic would misplace them.
+    const marks = hourMarks(solarDay({ y: 2026, m: 3, d: 8 }, MINNEAPOLIS))
+    expect(marks.map((m) => m.hour)).toEqual([0, 6, 12, 18])
+    expect(marks[1]!.at).toBeCloseTo(5 / 23, 6)
+    expect(marks[2]!.at).toBeCloseTo(11 / 23, 6)
+  })
+
+  it('stays honest on a 25 hour day', () => {
+    const marks = hourMarks(solarDay({ y: 2026, m: 11, d: 1 }, MINNEAPOLIS))
+    expect(marks.map((m) => m.hour)).toEqual([0, 6, 12, 18])
+    expect(marks[1]!.at).toBeCloseTo(7 / 25, 6)
+  })
+})
+
+describe('painting a whole day', () => {
+  const MINNEAPOLIS = { lat: 44.98, lon: -93.27 }
+
+  it('tags each label with the band under it and under its tick', () => {
+    const painting = layoutDay(solarDay({ y: 2026, m: 8, d: 17 }, MINNEAPOLIS), 716, 42)
+    for (const label of painting.labels) {
+      expect(label.levelUnder).toBe(levelAt(painting.bands, label.labelPx / 716))
+      expect(label.levelAtTrue).toBe(levelAt(painting.bands, label.truePx / 716))
+    }
+  })
+
+  it('drops hour marks that would crowd a time', () => {
+    const painting = layoutDay(solarDay({ y: 2026, m: 8, d: 17 }, MINNEAPOLIS), 716, 42)
+    for (const mark of painting.hours) {
+      expect(mark.at).toBeGreaterThanOrEqual(0.02)
+      for (const label of painting.labels) {
+        expect(Math.abs(mark.at * 716 - label.truePx)).toBeGreaterThanOrEqual(42 * 0.7)
+      }
+    }
+  })
+
+  it('survives a zero-height column without dividing by zero', () => {
+    // The first paint can happen before layout settles.
+    const painting = layoutDay(solarDay({ y: 2026, m: 8, d: 17 }, MINNEAPOLIS), 0, 42)
+    for (const label of painting.labels) {
+      expect(Number.isFinite(label.labelPx)).toBe(true)
+      expect(label.levelUnder).toBeDefined()
+    }
+  })
+})
+
+describe('level over a span', () => {
+  // The civil band is thinner than a label, so a label straddles bands and the
+  // ink has to be chosen by what covers most of it, not by its centre point.
+  const bands = [
+    { from: 0, to: 0.25, level: 'night' as const },
+    { from: 0.25, to: 0.28, level: 'nautical' as const },
+    { from: 0.28, to: 0.3, level: 'civil' as const },
+    { from: 0.3, to: 1, level: 'day' as const },
+  ]
+
+  it('picks the level with the greatest coverage', () => {
+    expect(levelOver(bands, 0.0, 0.2)).toBe('night')
+    expect(levelOver(bands, 0.29, 0.6)).toBe('day')
+  })
+
+  it('does not pick a sliver just because it holds the centre', () => {
+    // Centre lands in civil, but civil covers only a fifth of the span.
+    expect(levelAt(bands, 0.29)).toBe('civil')
+    expect(levelOver(bands, 0.28, 0.38)).toBe('day')
+  })
+
+  it('sums coverage of a level that appears in more than one band', () => {
+    const dusk = [
+      { from: 0, to: 0.4, level: 'night' as const },
+      { from: 0.4, to: 0.45, level: 'day' as const },
+      { from: 0.45, to: 1, level: 'night' as const },
+    ]
+    expect(levelOver(dusk, 0.35, 0.5)).toBe('night')
+  })
+
+  it('falls back to a point sample for a degenerate span', () => {
+    expect(levelOver(bands, 0.5, 0.5)).toBe('day')
+    expect(levelOver(bands, 0.5, 0.1)).toBe('day')
   })
 })

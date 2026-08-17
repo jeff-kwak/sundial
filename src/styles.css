@@ -1,38 +1,46 @@
-/* Light palette on bare :root, dark redefined under prefers-color-scheme, per
-   the vision's "follow the system theme". Band colours are the only thing the
-   gradient needs; render.ts composes them into one linear-gradient. */
+/* Light palette on bare :root, dark redefined under prefers-color-scheme, per the
+   vision's "follow the system theme".
+
+   The band colours differ between themes, but each *level* keeps the same light or
+   dark character in both — night is always dark, day is always pale. So the ink a
+   label needs is a function of the band it sits on, not of the OS theme, and the
+   two ink values below are deliberately theme-independent. That is what lets the
+   labels sit directly on the gradient with no plaque hiding it. */
 :root {
-  --night: #39435e;
-  --nautical: #6d80ab;
-  --civil: #adc0e2;
-  --day: #e6eefb;
+  --night: #2b3550;
+  --nautical: #4f6191;
+  --civil: #e9b489; /* twilight reads warm; it is also what the sky does */
+  --day: #cbdff7;
+
+  --ink-on-dark: #f4f7ff;
+  --ink-on-light: #0c1421;
 
   --ink: #101828;
   --ink-dim: #5a6478;
-  --plaque: rgb(255 255 255 / 0.62);
-  --plaque-line: rgb(16 24 40 / 0.1);
   --chrome-bg: #eef2fa;
   --chrome-line: rgb(16 24 40 / 0.12);
-  --tick: rgb(16 24 40 / 0.35);
+  --scrim: rgb(255 255 255 / 0.66);
+  --scrim-line: rgb(16 24 40 / 0.1);
 
-  --slot: 46px;
+  /* Label slot. Smaller than it was, because without plaques a label needs less
+     room, which means less displacement when dawn events collide. */
+  --slot: 42px;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --night: #05070d;
-    --nautical: #131f3c;
-    --civil: #35507f;
-    --day: #93b3e0;
+    --night: #04060c;
+    --nautical: #16214a;
+    --civil: #c08a63;
+    --day: #8fb4e3;
 
     --ink: #e9eef8;
     --ink-dim: #9aa6bd;
-    --plaque: rgb(6 9 16 / 0.5);
-    --plaque-line: rgb(233 238 248 / 0.12);
-    --chrome-bg: #0a0d15;
+    --chrome-bg: #080b12;
     --chrome-line: rgb(233 238 248 / 0.12);
-    --tick: rgb(233 238 248 / 0.4);
+    --scrim: rgb(6 9 16 / 0.55);
+    --scrim-line: rgb(233 238 248 / 0.12);
   }
 }
 
@@ -67,7 +75,6 @@ body {
 .chrome {
   flex: none;
   background: var(--chrome-bg);
-  border-bottom: 1px solid var(--chrome-line);
   padding: 10px 12px 8px;
 }
 
@@ -100,7 +107,7 @@ body {
 }
 
 .step:active {
-  background: var(--plaque);
+  background: var(--scrim);
 }
 
 .date {
@@ -177,10 +184,140 @@ body {
 }
 
 .ticks,
+.hours,
 .labels,
 .notes {
   position: absolute;
   inset: 0;
+  pointer-events: none;
+}
+
+/* Every mark and label takes its colour from the band beneath it. `--off` is the
+   opposing colour, kept as an unpacked triplet so the halo below can layer it at
+   several alphas. */
+[data-surface="dark"] {
+  --on: var(--ink-on-dark);
+  --off: 4 6 12;
+}
+
+[data-surface="light"] {
+  --on: var(--ink-on-light);
+  --off: 246 249 255;
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--on);
+  opacity: 0.3;
+}
+
+.leader {
+  position: absolute;
+  left: 21px;
+  width: 1px;
+  background: var(--on);
+  opacity: 0.3;
+}
+
+.hour {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 1px;
+  color: var(--on);
+}
+
+.hour::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0.11;
+}
+
+.hour span {
+  position: relative;
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.42;
+  transform: translateY(-0.5px);
+}
+
+/* No plaque, no backdrop blur: the times sit on the gradient itself, which is the
+   whole point of the graphic.
+   Legibility comes from the per-band ink plus a tight halo in the opposing colour.
+   The halo is not decoration and not optional: the civil band is ~30 minutes, far
+   thinner than a label, so at dawn and dusk a label always overlaps bands of both
+   characters and the ink alone cannot carry it. Layered small radii read as an
+   outline; one large soft shadow does not. */
+.ev {
+  position: absolute;
+  left: 16px;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--on);
+  text-shadow:
+    0 0 1px rgb(var(--off) / 0.6),
+    0 0 4px rgb(var(--off) / 0.45);
+}
+
+/* A scrim that fades out to the right, rather than a plaque.
+   Halos alone were patching a structural problem: a dawn label overlaps bands of
+   both characters at once, so no single ink is safe for all of its text. This backs
+   the text where the text actually is and leaves the right side of the column —
+   and all the space between labels — showing the gradient untouched. */
+.ev::before {
+  content: "";
+  position: absolute;
+  inset: -7px 0 -7px -16px;
+  background: linear-gradient(
+    to right,
+    rgb(var(--off) / 0.55) 0%,
+    rgb(var(--off) / 0.45) 55%,
+    rgb(var(--off) / 0) 100%
+  );
+  z-index: -1;
+}
+
+.ev .t {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* The small text is the vulnerable element. It sits on the row's baseline, so on a
+   dawn label the 28px time spans both the dark and the pale band while this lands
+   squarely on the pale one. It gets a tighter, harder halo of its own. */
+.ev .l {
+  font-size: 12px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.88;
+  text-shadow:
+    0 0 1px rgb(var(--off) / 1),
+    0 0 2px rgb(var(--off) / 1),
+    0 0 4px rgb(var(--off) / 0.9),
+    0 0 8px rgb(var(--off) / 0.7);
+}
+
+.ev .l .tech {
+  opacity: 0.72;
 }
 
 .notes {
@@ -189,70 +326,19 @@ body {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  pointer-events: none;
   padding: 0 24px;
 }
 
 .note {
-  background: var(--plaque);
-  border: 1px solid var(--plaque-line);
+  background: var(--scrim);
+  border: 1px solid var(--scrim-line);
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 14px;
   font-weight: 500;
+  color: var(--ink);
   text-align: center;
-  backdrop-filter: blur(6px);
-}
-
-.tick {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--tick);
-}
-
-.leader {
-  position: absolute;
-  left: 18px;
-  width: 1px;
-  background: var(--tick);
-}
-
-.ev {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 5px 12px;
-  border-radius: 10px;
-  background: var(--plaque);
-  border: 1px solid var(--plaque-line);
-  backdrop-filter: blur(6px);
-}
-
-.ev .t {
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.05;
-}
-
-.ev .l {
-  font-size: 12px;
-  color: var(--ink-dim);
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ev .l .tech {
-  opacity: 0.75;
+  backdrop-filter: blur(8px);
 }
 
 /* ---- footer ---------------------------------------------------------- */
@@ -263,7 +349,6 @@ body {
   justify-content: center;
   gap: 14px;
   padding: 10px 12px;
-  border-top: 1px solid var(--chrome-line);
   background: var(--chrome-bg);
   font-size: 13px;
   color: var(--ink-dim);
@@ -337,8 +422,8 @@ body {
   text-align: left;
   font: inherit;
   color: inherit;
-  background: var(--plaque);
-  border: 1px solid var(--plaque-line);
+  background: var(--scrim);
+  border: 1px solid var(--scrim-line);
   border-radius: 10px;
   padding: 10px 12px;
   cursor: pointer;
@@ -363,7 +448,7 @@ body {
   font: inherit;
   color: var(--ink-dim);
   background: none;
-  border: 1px solid var(--plaque-line);
+  border: 1px solid var(--scrim-line);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -384,7 +469,7 @@ body {
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--chrome-line);
-  background: var(--plaque);
+  background: var(--scrim);
   color: inherit;
   min-width: 0;
 }
@@ -419,7 +504,7 @@ body {
   padding: 9px;
   border-radius: 10px;
   border: 1px solid var(--chrome-line);
-  background: var(--plaque);
+  background: var(--scrim);
   color: inherit;
   cursor: pointer;
 }

@@ -2,7 +2,7 @@
 // into elements — every rule worth testing lives in solar.ts and layout.ts.
 
 import { formatCoords, formatDateLabel, formatDuration, formatTime, toDateInputValue, type Clock } from './format'
-import { layoutDay, type Painting } from './layout'
+import { layoutDay, levelAt, type Painting } from './layout'
 import { absenceMessages, LABEL } from './messages'
 import type { Coords, Level, LocalDate, SolarDay } from './solar'
 import type { SavedLocation, Selection } from './state'
@@ -37,6 +37,7 @@ export const elements = () => ({
   locName: must<HTMLElement>('#locname'),
   locCoords: must<HTMLElement>('#loccoords'),
   day: must<HTMLElement>('#day'),
+  hours: must<HTMLElement>('#hours'),
   ticks: must<HTMLElement>('#ticks'),
   labels: must<HTMLElement>('#labels'),
   notes: must<HTMLElement>('#notes'),
@@ -57,6 +58,18 @@ const BAND_VAR: Record<Level, string> = {
   nautical: '--nautical',
   civil: '--civil',
   day: '--day',
+}
+
+/**
+ * Whether a band is dark or pale, which decides the ink of anything drawn on it.
+ * This holds in both themes — night is dark and day is pale in each — so it is a
+ * property of the level, not of the colour scheme.
+ */
+const SURFACE: Record<Level, 'dark' | 'light'> = {
+  night: 'dark',
+  nautical: 'dark',
+  civil: 'light',
+  day: 'light',
 }
 
 const gradient = (painting: Painting): string => {
@@ -83,6 +96,7 @@ export const render = (v: View, el: Elements): void => {
 
   if (v.day === null) {
     el.day.style.backgroundImage = 'linear-gradient(to bottom, var(--night), var(--night))'
+    replace(el.hours, [])
     replace(el.ticks, [])
     replace(el.labels, [])
     replace(el.notes, [note(v.status ?? 'No location yet')])
@@ -97,11 +111,24 @@ export const render = (v: View, el: Elements): void => {
 
   const ticks: Node[] = []
   const labels: Node[] = []
+  const hours: Node[] = []
+
+  for (const mark of painting.hours) {
+    const row = document.createElement('div')
+    row.className = 'hour'
+    row.style.top = `${mark.at * height}px`
+    row.dataset.surface = SURFACE[levelAt(painting.bands, mark.at)]
+    const numeral = document.createElement('span')
+    numeral.textContent = String(mark.hour).padStart(2, '0')
+    row.append(numeral)
+    hours.push(row)
+  }
 
   for (const label of painting.labels) {
     const tick = document.createElement('div')
     tick.className = 'tick'
     tick.style.top = `${label.truePx}px`
+    tick.dataset.surface = SURFACE[label.levelAtTrue]
     ticks.push(tick)
 
     // A displaced label keeps a hairline back to where the event actually is.
@@ -111,12 +138,14 @@ export const render = (v: View, el: Elements): void => {
       leader.className = 'leader'
       leader.style.top = `${Math.min(label.truePx, label.labelPx)}px`
       leader.style.height = `${Math.abs(offset)}px`
+      leader.dataset.surface = SURFACE[label.levelAtTrue]
       ticks.push(leader)
     }
 
     const row = document.createElement('div')
     row.className = 'ev'
     row.style.top = `${label.labelPx}px`
+    row.dataset.surface = SURFACE[label.levelUnder]
 
     const time = document.createElement('span')
     time.className = 't'
@@ -137,6 +166,7 @@ export const render = (v: View, el: Elements): void => {
     labels.push(row)
   }
 
+  replace(el.hours, hours)
   replace(el.ticks, ticks)
   replace(el.labels, labels)
   replace(el.notes, absenceMessages(painting.absences).map(note))

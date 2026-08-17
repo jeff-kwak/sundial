@@ -138,11 +138,35 @@ at their true clock position. The colour carries the meaning; the labels are qui
 The proportional scale is the point: **August and December look visibly different**, and the
 narrowness of the twilight bands against the day is itself information.
 
+Four bands — night, nautical, **civil rendered warm**, day — because twilight is the warm part
+of the sky and the colour should say so. A quiet 3-hourly scale runs down the column with small
+numerals; marks that would crowd a time are dropped. Without it the day band is a featureless
+slab and the proportional scale is invisible — the marks are what make "this column is 24 hours"
+legible, so they are information, not decoration.
+
 ### Labels
 
-Time is primary and large. Beneath it, small and low-contrast: plain term then technical term
-— `shapes appear · BMNT`, `usable light · civil`. The gradient explains what it means; the
-text exists so a reading can be cross-checked against a published USNO table.
+Time is primary and large. Beside it, small and quieter: plain term then technical term —
+`shapes appear · BMNT`, `usable light · civil`. The gradient explains what it means; the text
+exists so a reading can be cross-checked against a published USNO table.
+
+**Ink comes from the band, and the band colours differ per theme while each level's light-or-dark
+character does not** — night is dark and day is pale in both. So the two ink values are
+theme-independent, sampled from the band the label landed on rather than the OS setting. That is
+what lets the times sit directly on the gradient with no plaque covering it.
+
+**But ink alone cannot carry a dawn label, and this is the subtle part.** The civil band is
+about 30 minutes — under 2% of the column, thinner than a single label — and all three dawn
+events fall inside roughly 40px of a phone-height column, so collision spreading throws their
+labels across ~130px. A label therefore routinely sits over bands of *both* characters at once,
+and its 12px secondary text lands on the pale strip while its 28px time spans both. No single
+ink is safe for all of one label's text. Sampling the dominant band across the label's full
+height helps but cannot fix it; halos alone only patch it.
+
+The fix is a **scrim that fades out to the right**: it backs the text where the text actually is
+and leaves the right of the column, and all the space between labels, showing the gradient
+untouched. It is not the opaque full-width plaque this design started with and rejected — that
+one hid the graphic that is the whole point.
 
 ### Label collision — the one hard layout problem
 
@@ -202,9 +226,13 @@ never a blank, a dash, or a plausible-looking wrong number:
 
 ## 7. Open questions
 
-- Keep the duration footer (`usable 14h 39m · light 15h 58m`), or strip to times only?
+- Keep the duration footer (`usable 15h 02m · light 16h 20m`), or strip to times only?
 - Should labels be hideable once learned, or always visible?
-- Exact gradient palette in light and dark, and text contrast against it at every band edge.
+- Should the day band brighten toward solar noon? It would stop the band being a flat slab, but
+  it adds a gradient stop that is not one of the six events, which muddies "every boundary is a
+  time".
+- The palette is implemented and checked in both themes, but only in a desktop browser at
+  390×844. It wants a look on real hardware, outdoors, at 05:00.
 
 ## 8. Tech stack
 
