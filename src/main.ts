@@ -193,4 +193,16 @@ new ResizeObserver(() => paint()).observe(el.day)
 paint()
 if (model.selection.kind === 'gps') locate()
 
-registerSW({ immediate: true })
+registerSW({
+  immediate: true,
+  onRegisteredSW(_swUrl, registration) {
+    // The worker is only re-checked on a navigation. An installed PWA resumed from
+    // the background does not navigate, which is the common case here — the app is
+    // opened for a few seconds and backgrounded, rarely cold-launched — so without
+    // this it could run a stale version for a long time. skipWaiting and
+    // clientsClaim are already set, so a found update activates and reloads itself.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') void registration?.update()
+    })
+  },
+})

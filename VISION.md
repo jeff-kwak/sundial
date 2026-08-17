@@ -347,6 +347,19 @@ that can print a fabricated time, which is success criterion #5.
   **entire app — application code and library together — is 29KB gzipped JS**, in a 97KB
   precache. That is better than the 40–60KB budgeted before measuring.
 
+### Updates
+
+Silent and automatic, no "new version" prompt: a push changes the asset hashes and the precache
+revisions, so `sw.js` differs, and `skipWaiting` + `clientsClaim` let the new worker take over at
+once instead of waiting for every client to close.
+
+The subtlety is *when* the worker gets re-checked. Browsers only revalidate it on a navigation —
+and an installed PWA resumed from the background does not navigate. That is the common case for
+this app, which gets opened for a few seconds and backgrounded rather than cold-launched, so it
+could otherwise run a stale version indefinitely. Hence an explicit `registration.update()` on
+`visibilitychange`. Updates still require network, by design: offline launches serve the cache,
+which is the entire point.
+
 ### Gradient
 
 One element, one `linear-gradient(to bottom, …)` whose stop percentages are computed from the
