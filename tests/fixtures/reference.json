@@ -1,0 +1,1869 @@
+[
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "sunset": "00:24",
+        "civilDusk": "00:54",
+        "civilDawn": "11:47",
+        "sunrise": "12:16"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "00:24"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "00:54"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "11:47"
+        },
+        {
+          "phen": "Rise",
+          "time": "12:16"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:20"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-20T11:11:49+00:00",
+      "nauticalDusk": "2026-03-21T01:29:05+00:00",
+      "civilDawn": "2026-03-20T11:46:13+00:00",
+      "civilDusk": "2026-03-21T00:54:41+00:00",
+      "sunrise": "2026-03-20T12:13:59+00:00",
+      "sunset": "2026-03-21T00:26:55+00:00"
+    }
+  },
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {
+        "sunset": "02:03",
+        "civilDusk": "02:41",
+        "civilDawn": "09:49",
+        "sunrise": "10:27"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "02:03"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "02:41"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "09:49"
+        },
+        {
+          "phen": "Rise",
+          "time": "10:27"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:15"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-06-21T08:59:22+00:00",
+      "nauticalDusk": "2026-06-22T03:30:33+00:00",
+      "civilDawn": "2026-06-21T09:49:08+00:00",
+      "civilDusk": "2026-06-22T02:40:47+00:00",
+      "sunrise": "2026-06-21T10:24:44+00:00",
+      "sunset": "2026-06-22T02:05:11+00:00"
+    }
+  },
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "sunset": "00:12",
+        "civilDusk": "00:41",
+        "civilDawn": "11:31",
+        "sunrise": "12:00"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "00:12"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "00:41"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "11:31"
+        },
+        {
+          "phen": "Rise",
+          "time": "12:00"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:06"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-22T10:56:55+00:00",
+      "nauticalDusk": "2026-09-23T01:14:28+00:00",
+      "civilDawn": "2026-09-22T11:31:19+00:00",
+      "civilDusk": "2026-09-23T00:40:04+00:00",
+      "sunrise": "2026-09-22T11:59:06+00:00",
+      "sunset": "2026-09-23T00:12:17+00:00"
+    }
+  },
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "civilDawn": "13:14",
+        "sunrise": "13:48",
+        "sunset": "22:34",
+        "civilDusk": "23:08"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "13:14"
+        },
+        {
+          "phen": "Rise",
+          "time": "13:48"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:11"
+        },
+        {
+          "phen": "Set",
+          "time": "22:34"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "23:08"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-21T12:37:11+00:00",
+      "nauticalDusk": "2026-12-21T23:45:21+00:00",
+      "civilDawn": "2026-12-21T13:14:26+00:00",
+      "civilDusk": "2026-12-21T23:08:06+00:00",
+      "sunrise": "2026-12-21T13:46:27+00:00",
+      "sunset": "2026-12-21T22:36:05+00:00"
+    }
+  },
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "sunset": "01:18",
+        "civilDusk": "01:49",
+        "civilDawn": "10:46",
+        "sunrise": "11:17"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "01:18"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "01:49"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "10:46"
+        },
+        {
+          "phen": "Rise",
+          "time": "11:17"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:17"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-17T10:07:12+00:00",
+      "nauticalDusk": "2026-08-18T02:27:00+00:00",
+      "civilDawn": "2026-08-17T10:46:05+00:00",
+      "civilDusk": "2026-08-18T01:48:07+00:00",
+      "sunrise": "2026-08-17T11:16:10+00:00",
+      "sunset": "2026-08-18T01:18:02+00:00"
+    }
+  },
+  {
+    "place": "Minneapolis",
+    "lat": 44.98,
+    "lon": -93.27,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "sunset": "01:34",
+        "civilDusk": "02:09",
+        "civilDawn": "10:10",
+        "sunrise": "10:44"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "01:34"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "02:09"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "10:10"
+        },
+        {
+          "phen": "Rise",
+          "time": "10:44"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "18:09"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-05-15T09:25:47+00:00",
+      "nauticalDusk": "2026-05-16T02:53:06+00:00",
+      "civilDawn": "2026-05-15T10:09:21+00:00",
+      "civilDusk": "2026-05-16T02:09:32+00:00",
+      "sunrise": "2026-05-15T10:41:55+00:00",
+      "sunset": "2026-05-16T01:36:58+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "civilDawn": "05:44",
+        "sunrise": "06:04",
+        "sunset": "18:11",
+        "civilDusk": "18:31"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:44"
+        },
+        {
+          "phen": "Rise",
+          "time": "06:04"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "12:07"
+        },
+        {
+          "phen": "Set",
+          "time": "18:11"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:31"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-20T05:19:27+00:00",
+      "nauticalDusk": "2026-03-20T18:55:27+00:00",
+      "civilDawn": "2026-03-20T05:43:27+00:00",
+      "civilDusk": "2026-03-20T18:31:27+00:00",
+      "sunrise": "2026-03-20T06:03:03+00:00",
+      "sunset": "2026-03-20T18:11:51+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {
+        "civilDawn": "05:36",
+        "sunrise": "05:58",
+        "sunset": "18:05",
+        "civilDusk": "18:28"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:36"
+        },
+        {
+          "phen": "Rise",
+          "time": "05:58"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "12:02"
+        },
+        {
+          "phen": "Set",
+          "time": "18:05"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:28"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-06-21T05:09:26+00:00",
+      "nauticalDusk": "2026-06-21T18:54:13+00:00",
+      "civilDawn": "2026-06-21T05:35:39+00:00",
+      "civilDusk": "2026-06-21T18:27:59+00:00",
+      "sunrise": "2026-06-21T05:57:03+00:00",
+      "sunset": "2026-06-21T18:06:36+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "civilDawn": "05:29",
+        "sunrise": "05:49",
+        "sunset": "17:56",
+        "civilDusk": "18:17"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:29"
+        },
+        {
+          "phen": "Rise",
+          "time": "05:49"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "11:53"
+        },
+        {
+          "phen": "Set",
+          "time": "17:56"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:17"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-22T05:04:42+00:00",
+      "nauticalDusk": "2026-09-22T18:40:42+00:00",
+      "civilDawn": "2026-09-22T05:28:42+00:00",
+      "civilDusk": "2026-09-22T18:16:42+00:00",
+      "sunrise": "2026-09-22T05:48:18+00:00",
+      "sunset": "2026-09-22T17:57:06+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "civilDawn": "05:32",
+        "sunrise": "05:54",
+        "sunset": "18:02",
+        "civilDusk": "18:24"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:32"
+        },
+        {
+          "phen": "Rise",
+          "time": "05:54"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "11:58"
+        },
+        {
+          "phen": "Set",
+          "time": "18:02"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:24"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-21T05:05:40+00:00",
+      "nauticalDusk": "2026-12-21T18:50:27+00:00",
+      "civilDawn": "2026-12-21T05:31:53+00:00",
+      "civilDusk": "2026-12-21T18:24:13+00:00",
+      "sunrise": "2026-12-21T05:53:15+00:00",
+      "sunset": "2026-12-21T18:02:52+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "civilDawn": "05:39",
+        "sunrise": "06:01",
+        "sunset": "18:07",
+        "civilDusk": "18:29"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:39"
+        },
+        {
+          "phen": "Rise",
+          "time": "06:01"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "12:04"
+        },
+        {
+          "phen": "Set",
+          "time": "18:07"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:29"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-17T05:14:44+00:00",
+      "nauticalDusk": "2026-08-17T18:53:25+00:00",
+      "civilDawn": "2026-08-17T05:39:25+00:00",
+      "civilDusk": "2026-08-17T18:28:44+00:00",
+      "sunrise": "2026-08-17T05:59:34+00:00",
+      "sunset": "2026-08-17T18:08:35+00:00"
+    }
+  },
+  {
+    "place": "Equator/Greenwich",
+    "lat": 0,
+    "lon": 0,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "civilDawn": "05:31",
+        "sunrise": "05:53",
+        "sunset": "18:00",
+        "civilDusk": "18:22"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "05:31"
+        },
+        {
+          "phen": "Rise",
+          "time": "05:53"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "11:56"
+        },
+        {
+          "phen": "Set",
+          "time": "18:00"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:22"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-05-15T05:05:34+00:00",
+      "nauticalDusk": "2026-05-15T18:47:09+00:00",
+      "civilDawn": "2026-05-15T05:30:59+00:00",
+      "civilDusk": "2026-05-15T18:21:44+00:00",
+      "sunrise": "2026-05-15T05:51:43+00:00",
+      "sunset": "2026-05-15T18:01:00+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "civilDawn": "03:41",
+        "sunrise": "04:22",
+        "sunset": "16:35",
+        "civilDusk": "17:16"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "03:41"
+        },
+        {
+          "phen": "Rise",
+          "time": "04:22"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:28"
+        },
+        {
+          "phen": "Set",
+          "time": "16:35"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "17:16"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-20T02:49:25+00:00",
+      "nauticalDusk": "2026-03-20T18:06:00+00:00",
+      "civilDawn": "2026-03-20T03:39:41+00:00",
+      "civilDusk": "2026-03-20T17:15:44+00:00",
+      "sunrise": "2026-03-20T04:19:20+00:00",
+      "sunset": "2026-03-20T16:36:05+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {
+        "sunrise": "00:54",
+        "sunset": "19:50",
+        "civilDusk": "21:42",
+        "civilDawn": "23:02"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Rise",
+          "time": "00:54"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:22"
+        },
+        {
+          "phen": "Set",
+          "time": "19:50"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "21:42"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "23:02"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "2026-06-20T23:01:46+00:00",
+      "civilDusk": "2026-06-21T21:42:19+00:00",
+      "sunrise": "2026-06-21T00:50:20+00:00",
+      "sunset": "2026-06-21T19:53:45+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "civilDawn": "03:22",
+        "sunrise": "04:04",
+        "sunset": "16:20",
+        "civilDusk": "17:02"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "03:22"
+        },
+        {
+          "phen": "Rise",
+          "time": "04:04"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:13"
+        },
+        {
+          "phen": "Set",
+          "time": "16:20"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "17:02"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-22T02:32:25+00:00",
+      "nauticalDusk": "2026-09-22T17:53:31+00:00",
+      "civilDawn": "2026-09-22T03:22:51+00:00",
+      "civilDusk": "2026-09-22T17:03:05+00:00",
+      "sunrise": "2026-09-22T04:02:34+00:00",
+      "sunset": "2026-09-22T16:23:22+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "civilDawn": "06:25",
+        "sunrise": "07:24",
+        "sunset": "13:13",
+        "civilDusk": "14:11"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "06:25"
+        },
+        {
+          "phen": "Rise",
+          "time": "07:24"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:18"
+        },
+        {
+          "phen": "Set",
+          "time": "13:13"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "14:11"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-21T05:28:11+00:00",
+      "nauticalDusk": "2026-12-21T15:08:20+00:00",
+      "civilDawn": "2026-12-21T06:25:27+00:00",
+      "civilDusk": "2026-12-21T14:11:04+00:00",
+      "sunrise": "2026-12-21T07:20:25+00:00",
+      "sunset": "2026-12-21T13:16:06+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "civilDawn": "01:47",
+        "sunrise": "02:38",
+        "sunset": "18:09",
+        "civilDusk": "18:59"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "01:47"
+        },
+        {
+          "phen": "Rise",
+          "time": "02:38"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:24"
+        },
+        {
+          "phen": "Set",
+          "time": "18:09"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:59"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-17T00:34:29+00:00",
+      "nauticalDusk": "2026-08-17T20:14:11+00:00",
+      "civilDawn": "2026-08-17T01:48:18+00:00",
+      "civilDusk": "2026-08-17T19:00:22+00:00",
+      "sunrise": "2026-08-17T02:36:35+00:00",
+      "sunset": "2026-08-17T18:12:05+00:00"
+    }
+  },
+  {
+    "place": "Helsinki",
+    "lat": 60.17,
+    "lon": 24.94,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "civilDawn": "00:38",
+        "sunrise": "01:42",
+        "sunset": "18:53",
+        "civilDusk": "19:58"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "00:38"
+        },
+        {
+          "phen": "Rise",
+          "time": "01:42"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:17"
+        },
+        {
+          "phen": "Set",
+          "time": "18:53"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "19:58"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "2026-05-15T00:36:16+00:00",
+      "civilDusk": "2026-05-15T19:56:55+00:00",
+      "sunrise": "2026-05-15T01:37:52+00:00",
+      "sunset": "2026-05-15T18:55:19+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "civilDawn": "03:44",
+        "sunrise": "04:44",
+        "sunset": "17:01",
+        "civilDusk": "18:02"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "03:44"
+        },
+        {
+          "phen": "Rise",
+          "time": "04:44"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:52"
+        },
+        {
+          "phen": "Set",
+          "time": "17:01"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "18:02"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-20T02:25:36+00:00",
+      "nauticalDusk": "2026-03-20T19:17:39+00:00",
+      "civilDawn": "2026-03-20T03:42:22+00:00",
+      "civilDusk": "2026-03-20T18:00:53+00:00",
+      "sunrise": "2026-03-20T04:39:38+00:00",
+      "sunset": "2026-03-20T17:03:37+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {},
+      "continuous": [
+        "above-horizon",
+        "above-twilight"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously above the Horizon",
+          "time": null
+        },
+        {
+          "phen": "Object continuously above the Twilight Limit",
+          "time": null
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:46"
+        },
+        {
+          "phen": "Lower Transit",
+          "time": "22:46"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "1970-01-01T00:00:01+00:00",
+      "civilDusk": "1970-01-01T00:00:01+00:00",
+      "sunrise": "1970-01-01T00:00:01+00:00",
+      "sunset": "1970-01-01T00:00:01+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "civilDawn": "03:23",
+        "sunrise": "04:24",
+        "sunset": "16:48",
+        "civilDusk": "17:48"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "03:23"
+        },
+        {
+          "phen": "Rise",
+          "time": "04:24"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:37"
+        },
+        {
+          "phen": "Set",
+          "time": "16:48"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "17:48"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-22T02:07:05+00:00",
+      "nauticalDusk": "2026-09-22T19:06:41+00:00",
+      "civilDawn": "2026-09-22T03:24:27+00:00",
+      "civilDusk": "2026-09-22T17:49:18+00:00",
+      "sunrise": "2026-09-22T04:21:54+00:00",
+      "sunset": "2026-09-22T16:51:52+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "civilDawn": "08:31",
+        "civilDusk": "12:53"
+      },
+      "continuous": [
+        "below-horizon"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously below the Horizon",
+          "time": null
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "08:31"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "12:53"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-21T06:46:44+00:00",
+      "nauticalDusk": "2026-12-21T14:37:39+00:00",
+      "civilDawn": "2026-12-21T08:31:12+00:00",
+      "civilDusk": "2026-12-21T12:53:11+00:00",
+      "sunrise": "1970-01-01T00:00:00+00:00",
+      "sunset": "1970-01-01T00:00:00+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "sunrise": "01:55",
+        "sunset": "19:38",
+        "civilDusk": "21:29"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Rise",
+          "time": "01:55"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:48"
+        },
+        {
+          "phen": "Set",
+          "time": "19:38"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "21:29"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "2026-08-17T00:02:35+00:00",
+      "civilDusk": "2026-08-17T21:33:55+00:00",
+      "sunrise": "2026-08-17T01:51:59+00:00",
+      "sunset": "2026-08-17T19:44:31+00:00"
+    }
+  },
+  {
+    "place": "Tromso",
+    "lat": 69.65,
+    "lon": 18.96,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "sunset": "21:48",
+        "sunrise": "23:32"
+      },
+      "continuous": [
+        "above-twilight"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously above the Twilight Limit",
+          "time": null
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "10:40"
+        },
+        {
+          "phen": "Set",
+          "time": "21:48"
+        },
+        {
+          "phen": "Rise",
+          "time": "23:32"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "1970-01-01T00:00:01+00:00",
+      "civilDusk": "1970-01-01T00:00:01+00:00",
+      "sunrise": "2026-05-14T23:23:19+00:00",
+      "sunset": "2026-05-15T21:57:43+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "sunset": "08:07",
+        "civilDusk": "08:32",
+        "civilDawn": "19:34",
+        "sunrise": "19:59"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "02:03"
+        },
+        {
+          "phen": "Set",
+          "time": "08:07"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "08:32"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "19:34"
+        },
+        {
+          "phen": "Rise",
+          "time": "19:59"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-19T19:04:09+00:00",
+      "nauticalDusk": "2026-03-20T09:01:19+00:00",
+      "civilDawn": "2026-03-19T19:33:14+00:00",
+      "civilDusk": "2026-03-20T08:32:13+00:00",
+      "sunrise": "2026-03-19T19:56:52+00:00",
+      "sunset": "2026-03-20T08:08:36+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {
+        "sunset": "06:54",
+        "civilDusk": "07:22",
+        "civilDawn": "20:32",
+        "sunrise": "21:00"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:57"
+        },
+        {
+          "phen": "Set",
+          "time": "06:54"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "07:22"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "20:32"
+        },
+        {
+          "phen": "Rise",
+          "time": "21:00"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-06-20T20:01:01+00:00",
+      "nauticalDusk": "2026-06-21T07:52:45+00:00",
+      "civilDawn": "2026-06-20T20:32:16+00:00",
+      "civilDusk": "2026-06-21T07:21:31+00:00",
+      "sunrise": "2026-06-20T20:58:34+00:00",
+      "sunset": "2026-06-21T06:55:13+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "sunset": "07:51",
+        "civilDusk": "08:16",
+        "civilDawn": "19:19",
+        "sunrise": "19:44"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:48"
+        },
+        {
+          "phen": "Set",
+          "time": "07:51"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "08:16"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "19:19"
+        },
+        {
+          "phen": "Rise",
+          "time": "19:44"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-21T18:51:00+00:00",
+      "nauticalDusk": "2026-09-22T08:45:01+00:00",
+      "civilDawn": "2026-09-21T19:20:03+00:00",
+      "civilDusk": "2026-09-22T08:15:58+00:00",
+      "sunrise": "2026-09-21T19:43:41+00:00",
+      "sunset": "2026-09-22T07:52:20+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "sunset": "09:05",
+        "civilDusk": "09:35",
+        "civilDawn": "18:12",
+        "sunrise": "18:41"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:53"
+        },
+        {
+          "phen": "Set",
+          "time": "09:05"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "09:35"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "18:12"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:41"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-20T17:35:43+00:00",
+      "nauticalDusk": "2026-12-21T10:10:18+00:00",
+      "civilDawn": "2026-12-20T18:11:37+00:00",
+      "civilDusk": "2026-12-21T09:34:24+00:00",
+      "sunrise": "2026-12-20T18:39:16+00:00",
+      "sunset": "2026-12-21T09:06:45+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "sunset": "07:27",
+        "civilDusk": "07:52",
+        "civilDawn": "20:06",
+        "sunrise": "20:31"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:59"
+        },
+        {
+          "phen": "Set",
+          "time": "07:27"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "07:52"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "20:06"
+        },
+        {
+          "phen": "Rise",
+          "time": "20:31"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-16T19:37:04+00:00",
+      "nauticalDusk": "2026-08-17T08:21:35+00:00",
+      "civilDawn": "2026-08-16T20:06:27+00:00",
+      "civilDusk": "2026-08-17T07:52:12+00:00",
+      "sunrise": "2026-08-16T20:30:47+00:00",
+      "sunset": "2026-08-17T07:27:52+00:00"
+    }
+  },
+  {
+    "place": "Sydney",
+    "lat": -33.87,
+    "lon": 151.21,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "sunset": "07:03",
+        "civilDusk": "07:29",
+        "civilDawn": "20:14",
+        "sunrise": "20:41"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:51"
+        },
+        {
+          "phen": "Set",
+          "time": "07:03"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "07:29"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "20:14"
+        },
+        {
+          "phen": "Rise",
+          "time": "20:41"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-05-14T19:43:22+00:00",
+      "nauticalDusk": "2026-05-15T07:59:40+00:00",
+      "civilDawn": "2026-05-14T20:13:33+00:00",
+      "civilDusk": "2026-05-15T07:29:29+00:00",
+      "sunrise": "2026-05-14T20:38:45+00:00",
+      "sunset": "2026-05-15T07:04:17+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "sunset": "06:17",
+        "civilDusk": "06:39",
+        "civilDawn": "17:48",
+        "sunrise": "18:10"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:14"
+        },
+        {
+          "phen": "Set",
+          "time": "06:17"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "06:39"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "17:48"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:10"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-03-19T17:22:58+00:00",
+      "nauticalDusk": "2026-03-20T07:04:42+00:00",
+      "civilDawn": "2026-03-19T17:48:16+00:00",
+      "civilDusk": "2026-03-20T06:39:24+00:00",
+      "sunrise": "2026-03-19T18:08:53+00:00",
+      "sunset": "2026-03-20T06:18:47+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {
+        "sunset": "05:39",
+        "civilDusk": "06:03",
+        "civilDawn": "18:13",
+        "sunrise": "18:37"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:08"
+        },
+        {
+          "phen": "Set",
+          "time": "05:39"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "06:03"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "18:13"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:37"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-06-20T17:45:49+00:00",
+      "nauticalDusk": "2026-06-21T06:30:05+00:00",
+      "civilDawn": "2026-06-20T18:13:01+00:00",
+      "civilDusk": "2026-06-21T06:02:53+00:00",
+      "sunrise": "2026-06-20T18:35:32+00:00",
+      "sunset": "2026-06-21T05:40:22+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "sunset": "06:02",
+        "civilDusk": "06:24",
+        "civilDawn": "17:34",
+        "sunrise": "17:56"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Set",
+          "time": "06:02"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "06:24"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "17:34"
+        },
+        {
+          "phen": "Rise",
+          "time": "17:56"
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "23:59"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-22T17:09:05+00:00",
+      "nauticalDusk": "2026-09-23T06:49:09+00:00",
+      "civilDawn": "2026-09-22T17:34:22+00:00",
+      "civilDusk": "2026-09-23T06:23:52+00:00",
+      "sunrise": "2026-09-22T17:55:00+00:00",
+      "sunset": "2026-09-23T06:03:14+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {
+        "sunset": "06:41",
+        "civilDusk": "07:05",
+        "civilDawn": "17:04",
+        "sunrise": "17:28"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:04"
+        },
+        {
+          "phen": "Set",
+          "time": "06:41"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "07:05"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "17:04"
+        },
+        {
+          "phen": "Rise",
+          "time": "17:28"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-12-20T16:34:36+00:00",
+      "nauticalDusk": "2026-12-21T07:33:30+00:00",
+      "civilDawn": "2026-12-20T17:03:19+00:00",
+      "civilDusk": "2026-12-21T07:04:47+00:00",
+      "sunrise": "2026-12-20T17:26:16+00:00",
+      "sunset": "2026-12-21T06:41:50+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "sunset": "05:56",
+        "civilDusk": "06:18",
+        "civilDawn": "18:02",
+        "sunrise": "18:24"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:10"
+        },
+        {
+          "phen": "Set",
+          "time": "05:56"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "06:18"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "18:02"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:24"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-16T17:36:44+00:00",
+      "nauticalDusk": "2026-08-17T06:44:07+00:00",
+      "civilDawn": "2026-08-16T18:02:29+00:00",
+      "civilDusk": "2026-08-17T06:18:21+00:00",
+      "sunrise": "2026-08-16T18:23:40+00:00",
+      "sunset": "2026-08-17T05:57:10+00:00"
+    }
+  },
+  {
+    "place": "Suva",
+    "lat": -18.14,
+    "lon": 178.44,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {
+        "sunset": "05:41",
+        "civilDusk": "06:04",
+        "civilDawn": "18:02",
+        "sunrise": "18:25"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:03"
+        },
+        {
+          "phen": "Set",
+          "time": "05:41"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "06:04"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "18:02"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:25"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-05-14T17:35:09+00:00",
+      "nauticalDusk": "2026-05-15T06:30:03+00:00",
+      "civilDawn": "2026-05-14T18:01:33+00:00",
+      "civilDusk": "2026-05-15T06:03:38+00:00",
+      "sunrise": "2026-05-14T18:23:20+00:00",
+      "sunset": "2026-05-15T05:41:51+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-03-20",
+    "usno": {
+      "events": {
+        "sunset": "07:19",
+        "civilDusk": "09:02",
+        "civilDawn": "17:02",
+        "sunrise": "18:46"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "01:01"
+        },
+        {
+          "phen": "Set",
+          "time": "07:19"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "09:02"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "17:02"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:46"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "2026-03-19T16:56:57+00:00",
+      "civilDusk": "2026-03-20T09:04:52+00:00",
+      "sunrise": "2026-03-19T18:35:45+00:00",
+      "sunset": "2026-03-20T07:26:04+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-06-21",
+    "usno": {
+      "events": {},
+      "continuous": [
+        "below-horizon",
+        "below-twilight"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously below the Horizon",
+          "time": null
+        },
+        {
+          "phen": "Object continuously below the Twilight Limit",
+          "time": null
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-06-20T23:33:06+00:00",
+      "nauticalDusk": "2026-06-21T02:16:59+00:00",
+      "civilDawn": "1970-01-01T00:00:00+00:00",
+      "civilDusk": "1970-01-01T00:00:00+00:00",
+      "sunrise": "1970-01-01T00:00:00+00:00",
+      "sunset": "1970-01-01T00:00:00+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-09-22",
+    "usno": {
+      "events": {
+        "sunset": "06:57",
+        "civilDusk": "08:40",
+        "civilDawn": "16:49",
+        "sunrise": "18:32"
+      },
+      "continuous": [],
+      "raw": [
+        {
+          "phen": "Upper Transit",
+          "time": "00:46"
+        },
+        {
+          "phen": "Set",
+          "time": "06:57"
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "08:40"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "16:49"
+        },
+        {
+          "phen": "Rise",
+          "time": "18:32"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-09-21T13:53:22+00:00",
+      "nauticalDusk": "2026-09-22T11:39:01+00:00",
+      "civilDawn": "2026-09-21T16:55:03+00:00",
+      "civilDusk": "2026-09-22T08:37:19+00:00",
+      "sunrise": "2026-09-21T18:32:17+00:00",
+      "sunset": "2026-09-22T07:00:05+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-12-21",
+    "usno": {
+      "events": {},
+      "continuous": [
+        "above-horizon",
+        "above-twilight"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously above the Horizon",
+          "time": null
+        },
+        {
+          "phen": "Object continuously above the Twilight Limit",
+          "time": null
+        },
+        {
+          "phen": "Upper Transit",
+          "time": "00:51"
+        },
+        {
+          "phen": "Lower Transit",
+          "time": "12:51"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "1970-01-01T00:00:01+00:00",
+      "nauticalDusk": "1970-01-01T00:00:01+00:00",
+      "civilDawn": "1970-01-01T00:00:01+00:00",
+      "civilDusk": "1970-01-01T00:00:01+00:00",
+      "sunrise": "1970-01-01T00:00:01+00:00",
+      "sunset": "1970-01-01T00:00:01+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-08-17",
+    "usno": {
+      "events": {
+        "civilDusk": "04:31",
+        "civilDawn": "21:19"
+      },
+      "continuous": [
+        "below-horizon"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously below the Horizon",
+          "time": null
+        },
+        {
+          "phen": "End Civil Twilight",
+          "time": "04:31"
+        },
+        {
+          "phen": "Begin Civil Twilight",
+          "time": "21:19"
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-08-16T19:19:35+00:00",
+      "nauticalDusk": "2026-08-17T06:35:24+00:00",
+      "civilDawn": "2026-08-16T21:25:21+00:00",
+      "civilDusk": "2026-08-17T04:29:38+00:00",
+      "sunrise": "1970-01-01T00:00:00+00:00",
+      "sunset": "1970-01-01T00:00:00+00:00"
+    }
+  },
+  {
+    "place": "McMurdo",
+    "lat": -77.85,
+    "lon": 166.67,
+    "date": "2026-05-15",
+    "usno": {
+      "events": {},
+      "continuous": [
+        "below-horizon",
+        "below-twilight"
+      ],
+      "raw": [
+        {
+          "phen": "Object continuously below the Horizon",
+          "time": null
+        },
+        {
+          "phen": "Object continuously below the Twilight Limit",
+          "time": null
+        }
+      ]
+    },
+    "crosscheck": {
+      "status": "OK",
+      "nauticalDawn": "2026-05-14T21:00:26+00:00",
+      "nauticalDusk": "2026-05-15T04:38:55+00:00",
+      "civilDawn": "1970-01-01T00:00:00+00:00",
+      "civilDusk": "1970-01-01T00:00:00+00:00",
+      "sunrise": "1970-01-01T00:00:00+00:00",
+      "sunset": "1970-01-01T00:00:00+00:00"
+    }
+  }
+]

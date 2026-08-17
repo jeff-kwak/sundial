@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-ssg/
+*.local
+.DS_Store
+.vite/
+.icon*.tmp.svg
+.playwright-mcp/

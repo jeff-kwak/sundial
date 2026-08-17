@@ -1,0 +1,445 @@
+/* Light palette on bare :root, dark redefined under prefers-color-scheme, per
+   the vision's "follow the system theme". Band colours are the only thing the
+   gradient needs; render.ts composes them into one linear-gradient. */
+:root {
+  --night: #39435e;
+  --nautical: #6d80ab;
+  --civil: #adc0e2;
+  --day: #e6eefb;
+
+  --ink: #101828;
+  --ink-dim: #5a6478;
+  --plaque: rgb(255 255 255 / 0.62);
+  --plaque-line: rgb(16 24 40 / 0.1);
+  --chrome-bg: #eef2fa;
+  --chrome-line: rgb(16 24 40 / 0.12);
+  --tick: rgb(16 24 40 / 0.35);
+
+  --slot: 46px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --night: #05070d;
+    --nautical: #131f3c;
+    --civil: #35507f;
+    --day: #93b3e0;
+
+    --ink: #e9eef8;
+    --ink-dim: #9aa6bd;
+    --plaque: rgb(6 9 16 / 0.5);
+    --plaque-line: rgb(233 238 248 / 0.12);
+    --chrome-bg: #0a0d15;
+    --chrome-line: rgb(233 238 248 / 0.12);
+    --tick: rgb(233 238 248 / 0.4);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--chrome-bg);
+  color: var(--ink);
+  font: 400 16px/1.35 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+/* ---- chrome ---------------------------------------------------------- */
+
+.chrome {
+  flex: none;
+  background: var(--chrome-bg);
+  border-bottom: 1px solid var(--chrome-line);
+  padding: 10px 12px 8px;
+}
+
+.daterow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.step,
+.date,
+.loc,
+.today,
+.ghost {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.step {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  font-size: 26px;
+  line-height: 1;
+  border-radius: 12px;
+  color: var(--ink-dim);
+}
+
+.step:active {
+  background: var(--plaque);
+}
+
+.date {
+  flex: 1;
+  height: 44px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 12px;
+}
+
+.locrow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 0 4px;
+  min-height: 26px;
+}
+
+.loc {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  text-align: left;
+  min-width: 0;
+  padding: 2px 0;
+}
+
+.locname {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.locname::before {
+  content: "⌖ ";
+  color: var(--ink-dim);
+}
+
+.loccoords,
+.today {
+  font-size: 12px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.today {
+  border: 1px solid var(--chrome-line);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.offscreen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- the day column -------------------------------------------------- */
+
+.day {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  /* set inline by render.ts — proportional by construction */
+  background-image: linear-gradient(to bottom, var(--night), var(--night));
+}
+
+.ticks,
+.labels,
+.notes {
+  position: absolute;
+  inset: 0;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  padding: 0 24px;
+}
+
+.note {
+  background: var(--plaque);
+  border: 1px solid var(--plaque-line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--tick);
+}
+
+.leader {
+  position: absolute;
+  left: 18px;
+  width: 1px;
+  background: var(--tick);
+}
+
+.ev {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 12px;
+  border-radius: 10px;
+  background: var(--plaque);
+  border: 1px solid var(--plaque-line);
+  backdrop-filter: blur(6px);
+}
+
+.ev .t {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+
+.ev .l {
+  font-size: 12px;
+  color: var(--ink-dim);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ev .l .tech {
+  opacity: 0.75;
+}
+
+/* ---- footer ---------------------------------------------------------- */
+
+.footer {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--chrome-line);
+  background: var(--chrome-bg);
+  font-size: 13px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- location sheet -------------------------------------------------- */
+
+.sheet {
+  width: min(100%, 460px);
+  margin: auto auto 0;
+  border: 0;
+  border-radius: 16px 16px 0 0;
+  padding: 16px;
+  background: var(--chrome-bg);
+  color: var(--ink);
+  max-height: 88dvh;
+}
+
+.sheet::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+.sheethead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.sheet h3 {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ghost {
+  font-weight: 600;
+  padding: 8px 4px;
+}
+
+.locoptions {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.locoptions li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.locoptions button.pick {
+  flex: 1;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--plaque);
+  border: 1px solid var(--plaque-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.locoptions button.pick[aria-current="true"] {
+  border-color: currentColor;
+  font-weight: 600;
+}
+
+.locoptions .sub {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.locoptions button.remove {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  font: inherit;
+  color: var(--ink-dim);
+  background: none;
+  border: 1px solid var(--plaque-line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.fields input:first-child {
+  grid-column: 1 / -1;
+}
+
+.sheet input,
+.sheet button[type="submit"] {
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--chrome-line);
+  background: var(--plaque);
+  color: inherit;
+  min-width: 0;
+}
+
+.sheet button[type="submit"] {
+  margin-top: 8px;
+  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.adderror {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .adderror {
+    color: #ff9b8f;
+  }
+}
+
+.segmented {
+  display: flex;
+  gap: 6px;
+}
+
+.segmented button {
+  flex: 1;
+  font: inherit;
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid var(--chrome-line);
+  background: var(--plaque);
+  color: inherit;
+  cursor: pointer;
+}
+
+.segmented button[aria-pressed="true"] {
+  border-color: currentColor;
+  font-weight: 600;
+}
+
+.fineprint {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ev,
+  .tick,
+  .leader {
+    transition: top 160ms ease, height 160ms ease;
+  }
+}

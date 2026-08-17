@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Sundial</title>
+    <meta name="description" content="When is there enough light outside to see?" />
+    <meta name="theme-color" content="#eef2fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#05070d" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Sundial" />
+    <!-- Absolute so Vite rewrites them for the /sundial/ base. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <header class="chrome">
+        <div class="daterow">
+          <button id="prev" class="step" type="button" aria-label="Previous day">‹</button>
+          <button id="datebtn" class="date" type="button" aria-label="Choose a date">
+            <span id="datelabel">—</span>
+          </button>
+          <button id="next" class="step" type="button" aria-label="Next day">›</button>
+        </div>
+        <div class="locrow">
+          <button id="locbtn" class="loc" type="button">
+            <span id="locname" class="locname">Locating…</span>
+            <span id="loccoords" class="loccoords"></span>
+          </button>
+          <button id="today" class="today" type="button" hidden>Today</button>
+        </div>
+        <!-- Off-screen rather than display:none so the native picker still opens. -->
+        <input id="datepicker" class="offscreen" type="date" tabindex="-1" aria-hidden="true" />
+      </header>
+
+      <section id="day" class="day" aria-label="Light through the day">
+        <div id="ticks" class="ticks" aria-hidden="true"></div>
+        <div id="labels" class="labels"></div>
+        <div id="notes" class="notes"></div>
+      </section>
+
+      <footer id="footer" class="footer"></footer>
+    </main>
+
+    <dialog id="locsheet" class="sheet">
+      <form method="dialog" class="sheethead">
+        <h2>Location</h2>
+        <button class="ghost" value="close" aria-label="Close">Done</button>
+      </form>
+      <ul id="locoptions" class="locoptions"></ul>
+      <form id="addloc" class="addloc">
+        <h3>Add a place</h3>
+        <div class="fields">
+          <input id="addname" name="name" type="text" placeholder="Name" required autocomplete="off" />
+          <input id="addlat" name="lat" type="number" placeholder="Latitude" step="any" min="-90" max="90" required />
+          <input id="addlon" name="lon" type="number" placeholder="Longitude" step="any" min="-180" max="180" required />
+        </div>
+        <button type="submit">Save place</button>
+        <p id="adderror" class="adderror" role="alert" hidden></p>
+      </form>
+      <form method="dialog" class="prefs">
+        <h3>Clock</h3>
+        <div class="segmented">
+          <button id="clock24" type="button">24h</button>
+          <button id="clock12" type="button">12h</button>
+        </div>
+        <p class="fineprint">
+          Times are computed on device and shown in this device's timezone. Sea-level horizon with
+          standard refraction — real terrain will shift what you see by minutes.
+        </p>
+      </form>
+    </dialog>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
