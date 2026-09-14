@@ -1,3 +1,4 @@
+import { isOnGrid, type Alarm } from './alarm'
 import type { Clock } from './format'
 import type { Coords } from './solar'
 
@@ -60,6 +61,23 @@ export const loadSelection = (): Selection =>
   })
 
 export const saveSelection = (selection: Selection): void => write('selection', selection)
+
+/**
+ * The alarm can no longer be *absent* — an absolute wall-clock time always
+ * exists — so "no alarm" is an alarm that is switched off, at a plausible hour
+ * for the first tap to land on.
+ */
+const NO_ALARM: Alarm = { minuteOfDay: 7 * 60, enabled: false }
+
+export const loadAlarm = (): Alarm =>
+  read<Alarm>('alarm', NO_ALARM, (v): v is Alarm => {
+    const a = v as Alarm | null
+    // A minute off the grid or out of range would place the marker somewhere the
+    // drag can never reach, so it is rejected rather than clamped.
+    return typeof a?.enabled === 'boolean' && typeof a.minuteOfDay === 'number' && isOnGrid(a.minuteOfDay)
+  })
+
+export const saveAlarm = (alarm: Alarm): void => write('alarm', alarm)
 
 /** Last known GPS fix, so a cold start with no signal still has somewhere to stand. */
 export const loadLastFix = (): Coords | null =>

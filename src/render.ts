@@ -1,10 +1,19 @@
 // The only module that touches the document. No logic beyond turning a Painting
 // into elements — every rule worth testing lives in solar.ts and layout.ts.
 
-import { formatCoords, formatDateLabel, formatDuration, formatTime, toDateInputValue, type Clock } from './format'
-import { layoutDay, levelAt, type Painting } from './layout'
-import { absenceMessages, LABEL } from './messages'
-import type { Coords, Level, LocalDate, SolarDay } from './solar'
+import { alarmTimeOn, fractionOf, nearestEvent, type Alarm } from './alarm'
+import {
+  formatCoords,
+  formatDateLabel,
+  formatDuration,
+  formatMinuteOfDay,
+  formatTime,
+  toDateInputValue,
+  type Clock,
+} from './format'
+import { bandsOf, layoutDay, levelAt, type Painting } from './layout'
+import { absenceMessages, LABEL, relationText } from './messages'
+import { toLocalDate, type Coords, type Level, type LocalDate, type SolarDay } from './solar'
 import type { SavedLocation, Selection } from './state'
 
 export type View = {
@@ -14,6 +23,7 @@ export type View = {
   readonly locationName: string
   readonly day: SolarDay | null
   readonly clock: Clock
+  readonly alarm: Alarm
   /** Shown in place of coordinates while locating, or when there is no fix. */
   readonly status: string | null
 }
@@ -34,12 +44,19 @@ export const elements = () => ({
   dateLabel: must<HTMLElement>('#datelabel'),
   datePicker: must<HTMLInputElement>('#datepicker'),
   locBtn: must<HTMLButtonElement>('#locbtn'),
+  alarmBtn: must<HTMLButtonElement>('#alarmbtn'),
+  alarmBtnLabel: must<HTMLElement>('#alarmbtnlabel'),
+  nightBtn: must<HTMLButtonElement>('#nightbtn'),
   locName: must<HTMLElement>('#locname'),
   locCoords: must<HTMLElement>('#loccoords'),
   day: must<HTMLElement>('#day'),
   hours: must<HTMLElement>('#hours'),
   ticks: must<HTMLElement>('#ticks'),
   labels: must<HTMLElement>('#labels'),
+  alarm: must<HTMLElement>('#alarm'),
+  alarmGrip: must<HTMLElement>('#alarmgrip'),
+  alarmTime: must<HTMLElement>('#alarmtime'),
+  alarmRel: must<HTMLElement>('#alarmrel'),
   notes: must<HTMLElement>('#notes'),
   footer: must<HTMLElement>('#footer'),
   sheet: must<HTMLDialogElement>('#locsheet'),
@@ -51,9 +68,15 @@ export const elements = () => ({
   addError: must<HTMLElement>('#adderror'),
   clock24: must<HTMLButtonElement>('#clock24'),
   clock12: must<HTMLButtonElement>('#clock12'),
+  night: must<HTMLElement>('#night'),
+  nightClock: must<HTMLElement>('#nightclock'),
+  nightTime: must<HTMLElement>('#nighttime'),
+  nightSub: must<HTMLElement>('#nightsub'),
+  nightExit: must<HTMLButtonElement>('#nightexit'),
+  nightHint: must<HTMLElement>('#nighthint'),
 })
 
-const BAND_VAR: Record<Level, string> = {
+export const BAND_VAR: Record<Level, string> = {
   night: '--night',
   nautical: '--nautical',
   civil: '--civil',
@@ -65,7 +88,7 @@ const BAND_VAR: Record<Level, string> = {
  * This holds in both themes — night is dark and day is pale in each — so it is a
  * property of the level, not of the colour scheme.
  */
-const SURFACE: Record<Level, 'dark' | 'light'> = {
+export const SURFACE: Record<Level, 'dark' | 'light'> = {
   night: 'dark',
   nautical: 'dark',
   civil: 'light',
@@ -86,6 +109,46 @@ const replace = (parent: HTMLElement, children: readonly Node[]): void => {
   parent.replaceChildren(...children)
 }
 
+/**
+ * The alarm marker, drawn on its own so a drag can move it without a full repaint
+ * — rebuilding every label node between 5-minute detents would fight the label
+ * transitions and make the detents feel mushy.
+ */
+export const renderAlarm = (v: View, el: Elements, dragging: boolean): void => {
+  const { alarm, day } = v
+
+  el.alarmBtnLabel.textContent = alarm.enabled ? formatMinuteOfDay(alarm.minuteOfDay, v.clock) : 'Set alarm'
+  el.alarmBtn.setAttribute('aria-pressed', String(alarm.enabled))
+  el.alarmBtn.setAttribute(
+    'aria-label',
+    alarm.enabled ? `Alarm ${formatMinuteOfDay(alarm.minuteOfDay, v.clock)}, on — tap to switch off` : 'Set alarm',
+  )
+
+  if (!alarm.enabled || day === null) {
+    el.alarm.hidden = true
+    return
+  }
+  el.alarm.hidden = false
+
+  const fraction = fractionOf(alarm, day)
+  el.alarm.style.top = `${fraction * el.day.clientHeight}px`
+  el.alarm.dataset.surface = SURFACE[levelAt(bandsOf(day), fraction)]
+
+  // The relation to the nearest event is derived here and never stored. It is what
+  // turns "half an hour before sunrise" from a guess into a confirmable reading.
+  const at = alarmTimeOn(alarm, toLocalDate(day.start))
+  const time = formatTime(at, v.clock)
+  const relation = nearestEvent(day, at)
+  const related = relation === null ? '' : relationText(relation)
+
+  // At rest the marker shows only the time; the relation appears under the thumb,
+  // where it is what you are steering by.
+  el.alarmTime.textContent = time
+  el.alarmRel.textContent = dragging ? related : ''
+  el.alarmGrip.setAttribute('aria-valuenow', String(alarm.minuteOfDay))
+  el.alarmGrip.setAttribute('aria-valuetext', related === '' ? time : `${time} · ${related}`)
+}
+
 export const render = (v: View, el: Elements): void => {
   el.dateLabel.textContent = formatDateLabel(v.date)
   el.datePicker.value = toDateInputValue(v.date)
@@ -93,6 +156,9 @@ export const render = (v: View, el: Elements): void => {
 
   el.locName.textContent = v.locationName
   el.locCoords.textContent = v.status ?? (v.coords === null ? '' : formatCoords(v.coords))
+
+  // Before the early return below: renderAlarm handles the dayless case itself.
+  renderAlarm(v, el, false)
 
   if (v.day === null) {
     el.day.style.backgroundImage = 'linear-gradient(to bottom, var(--night), var(--night))'

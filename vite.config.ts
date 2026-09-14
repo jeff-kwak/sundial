@@ -29,7 +29,11 @@ export default defineConfig({
         start_url: BASE,
         scope: BASE,
         display: 'standalone',
-        orientation: 'portrait',
+        // Not locked to portrait: night mode is a tent clock and wants to lie on
+        // its side. The day column is fluid, so landscape costs the main screen
+        // nothing. (`screen.orientation.lock()` is not an option — it needs
+        // fullscreen and is unsupported on iOS.)
+        orientation: 'any',
         background_color: '#05070d',
         theme_color: '#05070d',
         icons: [

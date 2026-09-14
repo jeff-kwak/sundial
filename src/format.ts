@@ -11,6 +11,14 @@ export const formatTime = (d: Date, clock: Clock): string =>
     ? `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
     : new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit', hour12: true }).format(d)
 
+/**
+ * A wall-clock minute-of-day with no date involved. The date below is arbitrary
+ * and deliberately not today: it exists only to reach the formatter, and 1 January
+ * has no DST fold to fall into.
+ */
+export const formatMinuteOfDay = (minuteOfDay: number, clock: Clock): string =>
+  formatTime(new Date(2001, 0, 1, Math.floor(minuteOfDay / 60), minuteOfDay % 60), clock)
+
 export const formatDuration = (ms: number): string => {
   const total = Math.round(ms / 60_000)
   const h = Math.floor(total / 60)

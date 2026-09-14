@@ -29,7 +29,13 @@
             <span id="locname" class="locname">Locating…</span>
             <span id="loccoords" class="loccoords"></span>
           </button>
-          <button id="today" class="today" type="button" hidden>Today</button>
+          <button id="alarmbtn" class="pill" type="button" aria-pressed="false">
+            <span id="alarmbtnlabel">Set alarm</span>
+          </button>
+          <!-- A glyph, not a word: the location row already carries a name, coordinates
+               and the alarm time, and two text pills squeeze the name to nothing. -->
+          <button id="nightbtn" class="pill glyph" type="button" aria-label="Night mode">☾</button>
+          <button id="today" class="pill" type="button" hidden>Today</button>
         </div>
         <!-- Off-screen rather than display:none so the native picker still opens. -->
         <input id="datepicker" class="offscreen" type="date" tabindex="-1" aria-hidden="true" />
@@ -39,6 +45,24 @@
         <div id="hours" class="hours" aria-hidden="true"></div>
         <div id="ticks" class="ticks" aria-hidden="true"></div>
         <div id="labels" class="labels"></div>
+        <!-- After #labels so the marker draws over them, and the only thing in the
+             column that takes pointer events. -->
+        <div id="alarm" class="alarm" hidden>
+          <div
+            id="alarmgrip"
+            class="alarmgrip"
+            role="slider"
+            tabindex="0"
+            aria-label="Alarm time"
+            aria-valuemin="0"
+            aria-valuemax="1435"
+            aria-valuenow="420"
+          >
+            <span id="alarmreadout" class="alarmreadout"
+              ><span id="alarmtime" class="t"></span><span id="alarmrel" class="r"></span
+            ></span>
+          </div>
+        </div>
         <div id="notes" class="notes"></div>
       </section>
 
@@ -73,6 +97,17 @@
         </p>
       </form>
     </dialog>
+
+    <!-- The tent clock. A separate surface the user opts into, so the day column
+         keeps its promise of holding no live state. -->
+    <div id="night" class="night" hidden>
+      <div id="nightclock" class="nightclock">
+        <div id="nighttime" class="nighttime">--:--</div>
+        <div id="nightsub" class="nightsub"></div>
+      </div>
+      <button id="nightexit" class="nightexit" type="button">Exit</button>
+      <p id="nighthint" class="nighthint" hidden>Install to the home screen for a full-screen clock.</p>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

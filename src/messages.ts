@@ -1,5 +1,7 @@
 // All user-visible copy. Kept out of layout and solar so those stay pure logic.
 
+import type { Relation } from './alarm'
+import { formatDuration } from './format'
 import type { Absence } from './layout'
 import type { EventKind } from './solar'
 
@@ -33,3 +35,17 @@ const ABSENCE: Record<EventKind, Record<Absence['absent'], string>> = {
 export const absenceMessages = (absences: readonly Absence[]): string[] => [
   ...new Set(absences.map((a) => ABSENCE[a.kind][a.absent])),
 ]
+
+/**
+ * The drag readout's second half — `28m before sunrise`. Display only: the alarm
+ * stores an absolute time, and this is what lets you set one *by eye against the
+ * bands* and still confirm what you got.
+ */
+export const relationText = (relation: Relation): string => {
+  const name = LABEL[relation.kind].plain
+  // Under half a minute the duration would round to `0m`, which reads as broken.
+  if (Math.abs(relation.deltaMs) < 30_000) return `at ${name}`
+  return relation.deltaMs > 0
+    ? `${formatDuration(relation.deltaMs)} before ${name}`
+    : `${formatDuration(-relation.deltaMs)} after ${name}`
+}

@@ -31,11 +31,21 @@ rows that answer nobody's question.
 
 Deliberately out of scope. Each was considered and cut:
 
-- **Live "now" state / countdowns.** Times only. You do the arithmetic.
+- **Live "now" state / countdowns *on the day column*.** The column shows times only; you do
+  the arithmetic. This was always a rule about the column, and night mode does not break it —
+  that is a separate full-screen surface you opt into, where a live clock is the whole point.
 - **Moon.** Phase and moonrise materially affect night visibility, but double the surface area.
-- **Notifications.** A PWA cannot reliably schedule a future local notification (Notification
-  Triggers never shipped); real push needs a server, which would break the zero-backend,
-  works-offline property. Open the app instead.
+- **Notifications.** Unchanged and still correct: a PWA cannot reliably schedule a future local
+  notification (Notification Triggers never shipped past a flag), a service worker is killed
+  after ~30s idle and cannot schedule itself, and real push needs a server, which would break
+  the zero-backend, works-offline property.
+
+  The alarm added in night mode is the **response** to that limitation, not a workaround for
+  it. It is a sound played by an open page, in the foreground, with the screen on — so the app
+  controls the sound and the volume, and nothing is being promised that the platform cannot
+  keep. Anything that claims to fire while the app is closed would silently not fire, which is
+  the same class of failure as printing a time that isn't real (success criterion #5). The
+  cost — the phone must be awake on a charger all night — is accepted deliberately.
 - **Multi-day tables.** One date at a time.
 - **Place search / geocoding.** No external geocoder. GPS or coordinates you saved.
 - **Golden hour, blue hour, solar noon, azimuths.** Not the question being asked.
@@ -201,6 +211,36 @@ geometry that exposed it.
   location in another timezone needs a bundled tz dataset (~100KB+); deferred, and the app
   should not silently mislead about it.
 
+### The alarm marker
+
+A draggable dashed line on the day column, setting a wake time as an ordinary wall-clock time
+snapped to a **5-minute grid**. You place it by eye against the bands — which is how "half an
+hour before sunrise" gets expressed — and a readout in the free right lane names the time and
+its relation to the nearest event (`05:30 · 28m before sunrise`) while the thumb is down. That
+relation is derived for display and never stored: the alarm is absolute, because an alarm
+clock is absolute. You want 06:00, not "whenever dawn happens to be".
+
+The grid is built by stepping real time from local midnight, so a 23-hour day has 276 slots and
+a 25-hour day 300, and the marker stays glued to the hour ticks on both.
+
+At rest the marker sits at the same wall-clock height on every date you page to while the bands
+slide underneath it. That is not a bug to fix. It is the clearest demonstration the app has of
+what it is for: you watch a 06:00 alarm move from daylight into darkness across the autumn.
+
+### Night mode
+
+A full-screen tent/nightstand clock, entered from the location row, that holds a screen wake
+lock, shows the time in large drifting numerals against **the current light level's colour**,
+and sounds the alarm. The background is the app's central claim — the colour carries the
+meaning — sampled at *now* instead of across 24 hours, which also makes the screen genuinely
+dark at 03:00 without a separate dim setting.
+
+It resolves everything from the real clock and deliberately **ignores the date you paged to**;
+inheriting it would compute the alarm against a date weeks away and sleep you through it. Its
+secondary line names the next solar event, and that event can be absent — Tromsø in December
+has no next sunrise — so it follows the same rule as everything else: a thing that did not
+happen is a value you display, never a blank.
+
 ## 5. Edge cases (real, not theoretical)
 
 Above ~60° in summer these happen constantly, and every one is an explicit rendered state —
@@ -230,7 +270,13 @@ never a blank, a dash, or a plausible-looking wrong number:
 - Should labels be hideable once learned, or always visible?
 - Should the day band brighten toward solar noon? It would stop the band being a flat slab, but
   it adds a gradient stop that is not one of the six events, which muddies "every boundary is a
-  time".
+  time". **Partly answered by the alarm marker:** a line across the day band gives it something
+  to be besides a flat slab, without adding a stop that is not one of the six.
+- Is a 5-minute detent the right feel in the hand, or is 10 minutes (`STEP_MIN`, ~4.9px per
+  slot instead of ~2.4px) easier to hit? One constant either way.
+- Night mode has been checked in a headless browser at 390×844 and 844×390. It wants a night on
+  real hardware in a tent, which is the only way to learn whether the drift excursion is enough
+  to matter and whether the alarm is loud enough to wake anyone.
 - The palette is implemented and checked in both themes, but only in a desktop browser at
   390×844. It wants a look on real hardware, outdoors, at 05:00.
 

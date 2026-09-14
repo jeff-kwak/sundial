@@ -25,6 +25,11 @@
   /* Label slot. Smaller than it was, because without plaques a label needs less
      room, which means less displacement when dawn events collide. */
   --slot: 42px;
+
+  /* One height for every pill you tap or drag — the alarm button, the night-mode
+     glyph, and the readout on the alarm marker. They read as one control family,
+     and each is a comfortable thumb target. */
+  --pill-h: 34px;
   color-scheme: light dark;
 }
 
@@ -87,7 +92,7 @@ body {
 .step,
 .date,
 .loc,
-.today,
+.pill,
 .ghost {
   font: inherit;
   color: inherit;
@@ -121,10 +126,13 @@ body {
 
 .locrow {
   display: flex;
-  align-items: baseline;
+  /* Centred, not baseline: the pills are taller than the location text and
+     baseline alignment would hang them below it. */
+  align-items: center;
   gap: 8px;
+  margin-top: 2px;
   padding: 0 4px;
-  min-height: 26px;
+  min-height: var(--pill-h);
 }
 
 .loc {
@@ -151,17 +159,56 @@ body {
 }
 
 .loccoords,
-.today {
-  font-size: 12px;
+.pill {
   color: var(--ink-dim);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.today {
+.loccoords {
+  font-size: 12px;
+}
+
+.pill {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--pill-h);
+  padding: 0 13px;
+  font-size: 13px;
+  line-height: 1;
   border: 1px solid var(--chrome-line);
   border-radius: 999px;
-  padding: 3px 10px;
+}
+
+/* The pill stays small enough to leave the place name room to breathe, so the
+   thumb gets an invisible box behind it instead. 44px is the target minimum;
+   the few pixels it overhangs fall inside the chrome's own padding. */
+.pill::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+
+/* A single glyph has almost no width of its own, so the width is set rather than
+   left to padding — at 34px it came out a circle, which read as a different kind
+   of control than the ovals beside it. */
+.pill.glyph {
+  width: 48px;
+  padding: 0;
+  font-size: 16px;
+}
+
+.pill[aria-pressed="true"] {
+  border-color: currentColor;
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .offscreen {
@@ -319,6 +366,110 @@ body {
 .ev .l .tech {
   opacity: 0.72;
 }
+
+/* ---- the alarm marker ------------------------------------------------ */
+
+/* A wall-clock line on the day column. At rest it sits at the same height on
+   every date you page to while the bands slide underneath it — that is not a bug
+   to fix, it is the clearest demonstration the app has of what it is for. */
+.alarm {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0; /* set inline by render.ts */
+  height: 0;
+  pointer-events: none;
+}
+
+.alarmgrip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* A 1px line needs a thumb-sized hit area behind it. --slot is 42px, just under
+     the 44px target minimum, so take whichever is larger. */
+  height: max(44px, var(--slot));
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* Only the handle opts out of native scrolling, and only the handle takes
+     pointer events — the rest of the column stays inert. */
+  touch-action: none;
+  pointer-events: auto;
+  cursor: ns-resize;
+  color: var(--on);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dashed, so it never reads as one of the six event ticks. */
+.alarmgrip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: repeating-linear-gradient(to right, currentColor 0 6px, transparent 6px 12px);
+  opacity: 0.85;
+}
+
+.alarmgrip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 9px;
+  height: 11px;
+  transform: translateY(-50%);
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* The right lane. The .ev label boxes span the full width but their text is
+   left-packed and ellipsizes, so the readout sits here without disturbing the
+   tested collision solver — which at a wake alarm's height is working hardest. */
+.alarmreadout {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--pill-h);
+  margin-right: 12px;
+  padding: 0 13px;
+  border-radius: 999px;
+  /* Near-opaque, not translucent: the dashed line runs behind this, and at 0.6 it
+     showed through the text as a strikethrough. */
+  background: rgb(var(--off) / 0.92);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.alarmreadout .t {
+  font-weight: 600;
+}
+
+/* The relation is context, not the value being set, so it stays quieter than the
+   time even while it is the thing you are steering by. */
+.alarmreadout .r:not(:empty) {
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+.alarmreadout .r:not(:empty)::before {
+  content: " · ";
+  opacity: 0.55;
+}
+
+.alarmgrip:focus-visible {
+  outline: none;
+}
+
+.alarmgrip:focus-visible .alarmreadout,
+.alarm.dragging .alarmreadout {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
 
 .notes {
   display: flex;
@@ -527,4 +678,144 @@ body {
   .leader {
     transition: top 160ms ease, height 160ms ease;
   }
+
+  /* The marker animates when the date changes underneath it, but never while the
+     thumb is down — a 5-minute detent has to land instantly to feel like a detent. */
+  .alarm:not(.dragging) {
+    transition: top 160ms ease;
+  }
 }
+
+/* ---- night mode ------------------------------------------------------ */
+
+/* Background is the current light level's colour: the app's central claim sampled
+   at *now* instead of across 24 hours. It is also what makes the screen genuinely
+   dark at 03:00 without a separate dim setting. The long fade means a band
+   boundary crossed at 05:40 reads as dawn arriving, not as a flash. */
+.night {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background-color: var(--night);
+  color: var(--on, var(--ink-on-dark));
+  transition: background-color 4s linear;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* `display: flex` above outranks the user-agent's `[hidden] { display: none }`,
+   so without this the overlay covers the app and swallows every tap. */
+.night[hidden] {
+  display: none;
+}
+
+.nightclock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  will-change: transform;
+}
+
+@media (orientation: landscape) {
+  .nightclock {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1.6rem;
+  }
+}
+
+/* Ink at the band colour rather than pure white: less burn, less glare, and
+   measurably less power on OLED. The web cannot touch the backlight, so content
+   luminance is the only brightness control there is. */
+.nighttime {
+  font-size: clamp(3rem, min(26vw, 40vh), 14rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.nightsub {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The dimming sits on each line rather than on the group: opacity applies to a
+   whole subtree, so a child of a faded parent can never be brighter than it, and
+   the ringing line has to be. */
+.nightsub > * {
+  opacity: 0.55;
+}
+
+.nightsub > .ring {
+  font-weight: 600;
+  opacity: 1;
+}
+
+.nightexit,
+.nighthint {
+  position: absolute;
+  font-size: 12px;
+  opacity: 0.32;
+}
+
+.nightexit {
+  top: max(10px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.nighthint {
+  /* Dimmer than the exit control, which has to be findable in the dark. This is a
+     one-time hint, and anything that glows in a tent at 03:00 has to earn it. */
+  opacity: 0.22;
+  left: 0;
+  right: 0;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  margin: 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+/* Jump, do not animate continuously: a permanently moving element repaints every
+   frame all night. The excursion is real rather than a 20px jitter, or it would
+   not prevent burn-in at all. */
+@media (prefers-reduced-motion: no-preference) {
+  .nightclock {
+    transition: transform 2s ease-in-out;
+  }
+
+  .night[data-ring="on"] .nighttime {
+    animation: alarmpulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes alarmpulse {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
