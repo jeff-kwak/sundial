@@ -46,6 +46,7 @@ type Session = {
   readonly ctx: AudioContext | null
   readonly onVisible: () => void
   readonly onKey: (e: KeyboardEvent) => void
+  readonly onResize: () => void
   timer: number
   /** The instant the alarm is next expected to fire, or null when it is off. */
   armed: Date | null
@@ -74,6 +75,12 @@ export const openNight = (el: Elements, args: NightArgs): void => {
   const onKey = (e: KeyboardEvent): void => {
     if (e.key === 'Escape') closeNight()
   }
+  // The drift offset is computed against the viewport it was chosen in, so a
+  // rotation can leave the clock hanging off the edge until the next excursion —
+  // up to 45 seconds later. Re-place it immediately instead.
+  const onResize = (): void => {
+    if (session !== null) drift(session)
+  }
 
   session = {
     el,
@@ -83,6 +90,7 @@ export const openNight = (el: Elements, args: NightArgs): void => {
     ctx: createContext(),
     onVisible,
     onKey,
+    onResize,
     timer: 0,
     armed: args.alarm.enabled ? nextAlarm(args.alarm, new Date()) : null,
     ringing: false,
@@ -101,11 +109,21 @@ export const openNight = (el: Elements, args: NightArgs): void => {
   el.nightHint.hidden = matchMedia('(display-mode: standalone)').matches
   document.addEventListener('visibilitychange', onVisible)
   document.addEventListener('keydown', onKey)
+  window.addEventListener('resize', onResize)
 
   void acquireLock()
   // Hides browser chrome on Android; a no-op worth attempting elsewhere. In an
   // installed PWA there is no chrome to hide, which is why the hint above exists.
-  void el.night.requestFullscreen?.().catch(() => {})
+  //
+  // Going fullscreen can bring an implicit orientation lock with it, pinning the
+  // screen to however the phone was held on the way in. That strands the one view
+  // in the app that most wants to lie on its side. The manifest already asks for
+  // `any`; unlocking makes fullscreen honour it. A no-op where there was no lock,
+  // and unreachable on iOS, where the fullscreen call is itself a no-op.
+  void el.night
+    .requestFullscreen?.()
+    .then(() => screen.orientation?.unlock?.())
+    .catch(() => {})
 
   paint(session, new Date())
   drift(session)
@@ -123,6 +141,7 @@ export const closeNight = (): void => {
   void s.lock?.release().catch(() => {})
   document.removeEventListener('visibilitychange', s.onVisible)
   document.removeEventListener('keydown', s.onKey)
+  window.removeEventListener('resize', s.onResize)
   if (document.fullscreenElement !== null) void document.exitFullscreen().catch(() => {})
 
   s.el.night.hidden = true
