@@ -214,14 +214,16 @@ el.nightBtn.addEventListener('click', () => {
   })
 })
 
-el.nightExit.addEventListener('click', (e) => {
-  e.stopPropagation()
-  closeNight()
+// The whole screen is the control. A fixed Exit button would sit in the same
+// pixels for eight hours and burn into an OLED panel, which is the one thing this
+// screen is built to avoid — so there is no button, and a tap does the work.
+//
+// Silencing wins when the alarm is sounding: waking at 4am and swiping at the
+// screen should stop the noise, not drop you back into the day column. Only once
+// there is nothing to silence does a tap exit.
+el.night.addEventListener('pointerdown', () => {
+  if (!dismiss()) closeNight()
 })
-
-// Tap anywhere else to silence. Deliberately not to exit: waking at 4am and
-// swiping at the screen should stop the noise, not dismiss the clock.
-el.night.addEventListener('pointerdown', () => dismiss())
 
 // ---- date -------------------------------------------------------------
 

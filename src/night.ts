@@ -14,7 +14,7 @@
 // it holds no logic worth unit-testing, because everything decidable lives in
 // alarm.ts.
 
-import { firingState, nextAlarm, type Alarm } from './alarm'
+import { firingState, nextAlarm, swellGain, type Alarm } from './alarm'
 import { formatTime, type Clock } from './format'
 import { bandsOf, levelAt, type Band } from './layout'
 import { absenceMessages, LABEL } from './messages'
@@ -34,9 +34,6 @@ const GRACE_MS = 5 * 60_000
 const DRIFT_MS = 45_000
 
 const BEEP_PERIOD_S = 1.5
-const RAMP_S = 30
-const MIN_GAIN = 0.05
-const MAX_GAIN = 0.6
 
 type Tone = { readonly osc: OscillatorNode; readonly gain: GainNode; readonly since: number; until: number }
 
@@ -153,10 +150,13 @@ export const closeNight = (): void => {
 /**
  * Tap anywhere to silence a ringing alarm, or to clear a reported miss. Silencing
  * re-arms for tomorrow rather than leaving the alarm spent.
+ *
+ * Returns whether there was anything to dismiss, which is what lets the caller
+ * treat the same tap as "exit" once the screen is quiet.
  */
-export const dismiss = (): void => {
+export const dismiss = (): boolean => {
   const s = session
-  if (s === null || (!s.ringing && s.missed === null)) return
+  if (s === null || (!s.ringing && s.missed === null)) return false
   const now = new Date()
   if (s.ringing) {
     stopRing(s)
@@ -164,6 +164,7 @@ export const dismiss = (): void => {
   }
   s.missed = null
   paint(s, now)
+  return true
 }
 
 /**
@@ -284,6 +285,11 @@ const paint = (s: Session, now: Date): void => {
     )
   }
 
+  // Stands in for the Exit button this screen cannot afford. It rides inside the
+  // drifting clock, so unlike a corner control it never burns in, and it is
+  // suppressed while ringing — the line above already owns the tap.
+  if (!s.ringing && s.missed === null) lines.push(line('tap anywhere to exit'))
+
   s.el.nightSub.replaceChildren(...lines)
 }
 
@@ -366,8 +372,8 @@ const startRing = (s: Session): void => {
 
 /**
  * Beeps are scheduled a couple of seconds ahead and topped up on each tick, so a
- * throttled timer costs at most a gap rather than silence. The envelope ramps from
- * 0.05 to 0.6 over ~30s, which wakes rather than startles.
+ * throttled timer costs at most a gap rather than silence. Each beep is played at
+ * whatever the swell has reached by then — see `swellGain`.
  */
 const scheduleBeeps = (s: Session): void => {
   const { ctx, tone } = s
@@ -376,7 +382,7 @@ const scheduleBeeps = (s: Session): void => {
   const horizon = ctx.currentTime + 2
   while (tone.until < horizon) {
     const start = Math.max(tone.until, ctx.currentTime + 0.02)
-    const level = MIN_GAIN + (MAX_GAIN - MIN_GAIN) * Math.min(1, (start - tone.since) / RAMP_S)
+    const level = swellGain(start - tone.since)
 
     for (const [offset, hz] of [
       [0, 880],

@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   alarmTimeOn,
   firingState,
+  SWELL_S,
+  swellGain,
   fractionOf,
   nearestEvent,
   nextAlarm,
@@ -212,5 +214,48 @@ describe('nearestEvent', () => {
 describe('STEP_MIN', () => {
   it('divides the day evenly, which every slot count above depends on', () => {
     expect(1440 % STEP_MIN).toBe(0)
+  })
+})
+
+describe('swellGain', () => {
+  const db = (gain: number) => 20 * Math.log10(gain)
+
+  it('starts at the edge of hearing and ends at full scale', () => {
+    expect(swellGain(0)).toBeCloseTo(0.002, 6)
+    expect(swellGain(SWELL_S)).toBeCloseTo(1, 6)
+  })
+
+  it('takes two minutes to get there', () => {
+    expect(SWELL_S).toBe(120)
+  })
+
+  it('clamps outside the ramp rather than running past full scale', () => {
+    // A beep can be scheduled a couple of seconds past the end of the ramp, and a
+    // gain above 1 would clip rather than get louder.
+    expect(swellGain(-5)).toBe(swellGain(0))
+    expect(swellGain(SWELL_S * 10)).toBe(1)
+  })
+
+  it('rises by an equal number of decibels every second', () => {
+    // The whole point of the geometric curve: a linear ramp would put three
+    // quarters of its perceived rise in the first ten seconds. Each quarter of the
+    // ramp must cover the same span in dB, which is what the ear actually hears.
+    const quarters = [0, 1, 2, 3].map((i) => db(swellGain(((i + 1) * SWELL_S) / 4)) - db(swellGain((i * SWELL_S) / 4)))
+    for (const step of quarters) expect(step).toBeCloseTo(quarters[0]!, 6)
+  })
+
+  it('never goes backwards', () => {
+    let previous = -Infinity
+    for (let t = 0; t <= SWELL_S; t += 1) {
+      const level = swellGain(t)
+      expect(level).toBeGreaterThan(previous)
+      previous = level
+    }
+  })
+
+  it('is still quiet a quarter of the way in', () => {
+    // If the alarm is already loud at 30s the swell has failed at its job, which
+    // is to wake rather than startle.
+    expect(swellGain(SWELL_S / 4)).toBeLessThan(0.02)
   })
 })

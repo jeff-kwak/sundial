@@ -72,7 +72,6 @@ export const elements = () => ({
   nightClock: must<HTMLElement>('#nightclock'),
   nightTime: must<HTMLElement>('#nighttime'),
   nightSub: must<HTMLElement>('#nightsub'),
-  nightExit: must<HTMLButtonElement>('#nightexit'),
   nightHint: must<HTMLElement>('#nighthint'),
 })
 

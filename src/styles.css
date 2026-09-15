@@ -765,28 +765,14 @@ body {
   opacity: 1;
 }
 
-.nightexit,
+/* The only fixed element left on this screen, and the reason there is no Exit
+   button: anything parked in a corner is still lit in the same pixels at 05:00
+   and burns into an OLED panel. The clock drifts; a button could not. Exit is a
+   tap anywhere instead. This is a one-time hint that a home-screen install gets
+   rid of, and anything that glows in a tent at 03:00 has to earn it. */
 .nighthint {
   position: absolute;
   font-size: 12px;
-  opacity: 0.32;
-}
-
-.nightexit {
-  top: max(10px, env(safe-area-inset-top));
-  right: max(10px, env(safe-area-inset-right));
-  font-family: inherit;
-  color: inherit;
-  background: none;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  padding: 6px 14px;
-  cursor: pointer;
-}
-
-.nighthint {
-  /* Dimmer than the exit control, which has to be findable in the dark. This is a
-     one-time hint, and anything that glows in a tent at 03:00 has to earn it. */
   opacity: 0.22;
   left: 0;
   right: 0;

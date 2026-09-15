@@ -121,6 +121,28 @@ export const firingState = (target: Date, now: Date, graceMs: number): FiringSta
 }
 
 /**
+ * How loud the alarm should be `elapsedS` into ringing, as a Web Audio gain.
+ *
+ * Two minutes from the edge of hearing to full scale. The interpolation is
+ * geometric rather than linear because hearing is: equal *ratios* of amplitude
+ * sound like equal steps, so a linear ramp would spend three quarters of its
+ * perceived rise in the first ten seconds and then creep — the startle this is
+ * built to avoid. Geometric spends the same number of decibels every second.
+ *
+ * The ceiling is 1 because 1 is full scale for the output. The web cannot reach
+ * the device volume: there is no API for it, and the media slider, the ringer
+ * switch and Do Not Disturb all sit above this code.
+ */
+export const SWELL_S = 120
+const MIN_GAIN = 0.002
+const MAX_GAIN = 1
+
+export const swellGain = (elapsedS: number): number => {
+  const t = clamp01(elapsedS / SWELL_S)
+  return MIN_GAIN * (MAX_GAIN / MIN_GAIN) ** t
+}
+
+/**
  * The solar event nearest an instant. Positive `deltaMs` means the event is still
  * ahead, so the alarm is *before* it. This is what turns "eyeball it against the
  * bands" into a confirmable action while the thumb is down.
